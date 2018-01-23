@@ -153,9 +153,69 @@ void cppString() {
   // replace(numOfChars, startingAtIndex)
 }
 
-int vectors(){
+void vectors(){
+  //vectors == ArrayList where array can't change their size. vectors can.
+  vector <int> lotteryNumVect(10);
+  //put array in vector
+  int lotteryNumArray[5]  {4, 42, 22, 33, 55};
+  lotteryNumVect.insert(lotteryNumVect.begin(), lotteryNumArray, lotteryNumArray+3);
   
+  lotteryNumVect.push_back(999);
+  cout << lotteryNumVect.back() << endl;
+  // insert
+  // push_back = insert at last index
+  // back = get last index
+  // empty = see if vectors are empty
+  // pop_back = remove the last value;
 }
+
+int summation(int num1, int num2 = 1){
+  return num1 + num2;
+}
+
+int fileHandle(){
+  string jtQuote = "Yay what is this!";
+  ofstream writer("jtquote.txt");
+  if (!writer) {
+    cout << "Error opening file" << endl;
+    return -1;
+  } else {
+    writer << jtQuote << endl;
+    writer.close();
+  }
+  
+  ofstream writer2("jtquote.txt", ios::app);
+  //ios::app : apend to what's there
+  //ios::binary : Treat file as binary
+  //ios::in Open a file to read input
+  //ios::trunc : default
+  //ios::out : Open a file to write output
+
+  if (!writer2) {
+    cout << "Error opening file" << endl;
+    return -1;
+  } else {
+    writer2 << "\n - JT is cool"<< endl;
+    writer2.close();
+  }
+  
+  char letter;
+  ifstream reader("jtquote.txt");
+  if(!reader){
+    cout << "Error opening file" << endl;
+    return -1;
+  } else {
+    for (int i = 0; ! reader.eof(); i++){
+      reader.get(letter);
+      cout << letter;
+    }
+    cout << endl;
+    reader.close();
+  }
+  return 0;
+}
+
+
 
 int main(int argc, char const *argv[]) {
   //variables();
@@ -163,6 +223,12 @@ int main(int argc, char const *argv[]) {
   // ifElseStatement();
   //arrays();
   // loopings();
-  cppString();
+  // cppString();
+  // functions -- can have default value
+  // vectors();
+  // int number = summation(1, 44);
+  // cout << number << endl;
+  fileHandle();
+  
   return 0;
 }
