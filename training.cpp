@@ -5,6 +5,79 @@
 
 using namespace std;
 
+class Animal {
+private:
+  int age;
+  int weight;
+  string name;
+  static int numberOfAnimals;
+  
+public:
+  int getAge(){return age;}
+  int getWeight(){return weight;}
+  string getName(){return name;}
+  
+  void setAge(int num){age = num;}
+  void setWeight(int kg){weight = kg;}
+  void setName(string nama){name = nama;}
+  
+  
+  Animal(int, int, string);
+  
+  ~Animal();
+  
+  Animal();
+  
+  static int getNumOfAnimals() {return numberOfAnimals;}
+  
+  void toString();
+};
+
+int Animal::numberOfAnimals = 0;
+
+Animal::Animal(int age, int weight, string name){
+  this -> age = age;
+  this -> weight = weight;
+  this -> name = name;
+  Animal::numberOfAnimals++;
+}
+
+Animal::~Animal(){
+  cout << "Animal " << this -> name << " destroyed." << endl;
+}
+
+Animal::Animal(){
+  Animal::numberOfAnimals++;
+}
+
+void Animal::toString() {
+  cout << this -> name << " is " << this -> age << " yrs old. " << this->weight << " kg. " << endl;
+}
+
+class Dog : public Animal {
+private:
+  string sound = "Woof";
+  
+public: 
+  void getSound() {cout << sound << endl;}
+  
+  Dog(int, int, string, string);
+  
+  Dog(): Animal(){};
+  
+  void toString();
+};
+
+Dog::Dog(int age, int weight, string name, string bark):
+Animal(age, weight, name) {
+  this->sound = bark;
+}
+
+void Dog::toString() {
+  cout << this->getName() << " is " << this->getAge() 
+      << " years old. " << this->getWeight() << " kg. " << sound << endl;
+}
+
 void printInt(int number){
   cout << "number: " << number << endl;
 }
@@ -215,7 +288,53 @@ int fileHandle(){
   return 0;
 }
 
+int errorHandling(){
+  int number = 0;
+  try {
+    if(number != 0){
+      cout << 2/number <<endl;
+    } else throw(number);
+  } catch(int number){
+    cout << number << " is not valid" << endl;
+  }
+  
+  return 0;
+}
 
+void pointers(){
+  int myAge = 39;
+  
+  cout << "myAge is located at " << &myAge <<endl;
+}
+
+void addThese(int* number){
+   *number = *number * 5;
+}
+
+void addTheseRef(int& number){
+  number = number + 5;
+}
+
+void pointerArrays(){
+  int badNums[5] = {4, 13, 14, 24 ,34};
+  int* numPointr = badNums;
+  cout << "Address " << numPointr << " Value " << *numPointr << endl;
+  numPointr++;
+  numPointr++;
+  cout << "Address " << numPointr << " Value " << *numPointr << endl;
+}
+
+void pointerVsReferences(){
+  //use pointers if do not want to initialize declaration
+  //use references if you do not need to change the variables, sorta like let, val, final?
+  int myAge = 39;
+  int& ageRef = myAge;
+  int* agePtr = &myAge;
+  ageRef++;
+  addThese(agePtr);
+  addTheseRef(ageRef);
+  cout << "myAge: " << myAge << endl;
+}
 
 int main(int argc, char const *argv[]) {
   //variables();
@@ -228,7 +347,30 @@ int main(int argc, char const *argv[]) {
   // vectors();
   // int number = summation(1, 44);
   // cout << number << endl;
-  fileHandle();
-  
+  // fileHandle();
+  // errorHandling();
+  // pointers();
+  // int sum = 10;
+  // addThese(&sum);
+  // addThese(&sum);
+  // addThese(&sum);
+  // printInt(sum);
+  // pointerArrays();
+  // pointerVsReferences();
+
+  Animal fred;
+  fred.setName("Fred");
+  fred.setWeight(30);
+  fred.setAge(20);
+  cout << fred.getName() << "is " << fred.getWeight() << " kg. " << fred.getAge() << " old. "<< endl;
+  Animal tom(36, 15, "tom");
+  cout << tom.getName() << "is " << tom.getWeight() << " kg. " << tom.getAge() << " old. "<< endl;
+  Dog spot(38, 16, "Spot", "WOOF!");
+  cout << "Number of Animals " << Animal::getNumOfAnimals() << endl;
+  spot.getSound();
+  tom.toString();
+  spot.toString();
+  spot.Animal::toString();
+
   return 0;
 }
